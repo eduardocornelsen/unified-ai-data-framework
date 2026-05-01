@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# Virtual envs
+.env
+.venv/
+venv/
+env/
+
+# MLflow
+mlruns/
+mlartifacts/
+mlflow.db
+mlflow.db-journal
+
+# Databricks
+.databricks/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code local settings
+*.local.json
+.claude/settings.local.json
+
+# Repo artifacts (carried from source repos, not part of the framework)
+NEXT_STEP.md
+assets/logo_full.png
+assets/make_transparent.py

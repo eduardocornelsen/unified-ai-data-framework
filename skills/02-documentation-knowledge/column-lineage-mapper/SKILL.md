@@ -1,9 +1,9 @@
 ---
-name: schema-mapper
-description: Document column-level mappings between source and target schemas. Use when integrating data from multiple systems, designing ETL transformations, or documenting how raw fields become analytical assets.
+name: column-lineage-mapper
+description: Document column-level mappings between source and target schemas. Use when integrating data from multiple systems, designing ETL transformations, or documenting how raw fields become analytical assets. For database schema discovery and ERD generation, see skills/01-data-quality-validation/schema-mapper.
 ---
 
-# Schema Mapper
+# Column Lineage Mapper
 
 # When to use
 - Integrating a new data source and need to map its fields to the existing data model
