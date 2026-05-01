@@ -1,9 +1,9 @@
 ---
-name: metric-reconciliation
-description: Trace and resolve discrepancies when the same metric shows different values in two or more sources. Use before reporting, after pipeline changes, or when stakeholders question a number.
+name: metric-discrepancy-resolver
+description: Trace and resolve discrepancies when the same metric shows different values in two or more sources. Use before reporting, after pipeline changes, or when stakeholders question a number. For cross-source metric validation with Python automation, see skills/01-data-quality-validation/metric-reconciliation.
 ---
 
-# Metric Reconciliation
+# Metric Discrepancy Resolver
 
 # When to use
 - Two dashboards or reports show different values for the same KPI

@@ -11,8 +11,8 @@ import os
 import re
 from pathlib import Path
 
-# Use the directory containing this script as the base path
-BASE_PATH = Path(__file__).resolve().parent
+# Skills directory is at the repo root's skills/ folder
+BASE_PATH = Path(__file__).resolve().parent.parent / "skills"
 REQUIRED_SECTIONS = [
     "When to use",
     "Process",
@@ -42,15 +42,16 @@ def validate_frontmatter(content):
 
 
 def validate_sections(content):
-    """Check if required sections are present"""
+    """Check if required sections are present (accepts # or ## headings)"""
     missing = []
     for section in REQUIRED_SECTIONS:
-        if f"## {section}" not in content:
+        # Accept both h1 and h2 heading levels
+        if f"# {section}" not in content:
             missing.append(section)
-    
+
     if missing:
         return False, f"Missing sections: {', '.join(missing)}"
-    
+
     return True, "OK"
 
 
