@@ -1,0 +1,5 @@
+# Extra pip packages for the EDA notebook.
+# Databricks Serverless pre-installs: pyspark, pandas, numpy, matplotlib, mlflow.
+# Only packages NOT in the Databricks Serverless base image are listed here.
+seaborn>=0.13
+scipy>=1.13
