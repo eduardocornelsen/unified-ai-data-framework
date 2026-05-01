@@ -393,7 +393,7 @@ The reference implementation runs on Databricks Serverless with PySpark and Delt
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/unified-ai-data-framework.git
+git clone https://github.com/eduardocornelsen/unified-ai-data-framework.git
 
 # Navigate into it
 cd unified-ai-data-framework
@@ -402,7 +402,7 @@ cd unified-ai-data-framework
 Or, to add as a submodule to an existing project:
 
 ```bash
-git submodule add https://github.com/your-username/unified-ai-data-framework.git data-skills
+git submodule add https://github.com/eduardocornelsen/unified-ai-data-framework.git data-skills
 git submodule update --init --recursive
 ```
 
@@ -958,7 +958,7 @@ Separate repos in the same ecosystem. `ai-analyst` is a Python execution backend
 
 ## Acknowledgements
 
-The `skills/` directory was sourced and adapted from [**data-analytics-skills**](https://github.com/ai-analyst-lab/data-analytics-skills). The playbooks, personas, and framework architecture originate from [**data-skills**](https://github.com/your-username/claude-code-data-science).
+The `skills/` directory was sourced and adapted from [**data-analytics-skills**](https://github.com/nimrodfisher/data-analytics-skills) by Nimrod Fisher. The playbooks, personas, and framework architecture originate from [**data-skills**](https://github.com/eduardocornelsen/data-skills) by Eduardo Cornelsen.
 
 **Why merge them?** The original framework excelled at process management (playbooks) but lacked tactical depth. When Claude was asked to "run a cohort analysis," it had to hallucinate the structure. By integrating the analytics skills library, we give the AI vetted, deterministic templates for 33 specific analytical tasks — consistency and quality, every time.
 

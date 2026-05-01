@@ -10,7 +10,7 @@
 
 - **Playbooks** — step-by-step instructions for each phase of a DS project (problem framing, data contracts, EDA, hypothesis testing, feature engineering, training, evaluation, inferencing, monitoring, experimentation).
 - **Personas** — role-specific system prompts (data analyst, analytics engineer, ML engineer, reviewer, etc.) that set tone, focus, and gates.
-- **Skills** — a tactical library of 33 modular analytical techniques organized into 6 domains (data quality, documentation, analysis, storytelling, communication, workflow optimization). Sourced from [data-analytics-skills](https://github.com/ai-analyst-lab/data-analytics-skills).
+- **Skills** — a tactical library of 33 modular analytical techniques organized into 6 domains (data quality, documentation, analysis, storytelling, communication, workflow optimization). Sourced from [data-analytics-skills](https://github.com/nimrodfisher/data-analytics-skills).
 - **Templates** — copy-paste scaffolds for problem statements, model cards, experiment designs.
 - **Reference implementation** — the ad-click pipeline as a working end-to-end example.
 
