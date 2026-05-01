@@ -104,8 +104,11 @@ That's it. Claude will run the entire data science pipeline automatically:
 2. **Hypothesis Testing** — rigorous statistical tests with effect sizes and power analysis
 3. **Feature Engineering** — encode, scale, and transform features; create train/val/test splits
 4. **Model Training** — train 3+ candidate models, tune hyperparameters, log to MLflow, pick a champion
-5. **Inferencing** — score data with the champion model, monitor for drift
-6. **Review** — audit the full pipeline for leakage, statistical validity, and reproducibility
+5. **Model Evaluation** — deep evaluation with calibration, fairness, error analysis, and Go/No-Go promotion gate
+6. **Inferencing** — score data with the champion model, validate schema
+7. **Monitoring** — set up drift detection, performance decay tracking, retraining triggers, and rollback
+8. **Stakeholder Communication** — translate results into executive summaries, reports, slide decks, and one-pagers
+9. **Review** — audit the full pipeline for leakage, statistical validity, and reproducibility
 
 Each phase produces a self-contained notebook and reusable utility code. All experiments are tracked in MLflow.
 
@@ -188,9 +191,11 @@ Step-by-step instructions that Claude follows to produce notebooks, code, and ar
 | `03_HYPOTHESIS_TESTING.md` | Rigorous statistical tests — assumption checks, effect sizes, power analysis, multiple-testing correction |
 | `04_FEATURE_ENGINEERING.md` | Transform raw data into model-ready features — encoding, scaling, temporal features, text features |
 | `05_MODEL_TRAINING.md` | Train and compare candidate models — hyperparameter tuning, MLflow tracking, champion selection |
+| `06_MODEL_EVALUATION.md` | Deep model evaluation — calibration, fairness, error analysis, SHAP stability, Go/No-Go promotion gate |
 | `07_INFERENCING.md` | Score new data in production — schema validation, feature pipelines, drift monitoring |
-
-> More playbooks are planned: model evaluation, monitoring, and experimentation. See [PLAN.md](./PLAN.md).
+| `08_MONITORING.md` | Operational monitoring — feature drift, prediction drift, performance decay, retraining triggers, rollback |
+| `09_EXPERIMENTATION.md` | Experiment design — power analysis, MDE sensitivity, randomization, sequential testing, CUPED (standalone) |
+| `10_STAKEHOLDER_COMMUNICATION.md` | Business translation — audience mapping, SCR narrative, impact quantification, executive summaries |
 
 ### Personas — *Who* does the work
 
@@ -249,7 +254,11 @@ unified-ai-data-framework/
 │       │   ├── hypothesis-testing/SKILL.md     # /hypothesis-testing
 │       │   ├── feature-engineering/SKILL.md    # /feature-engineering
 │       │   ├── model-training/SKILL.md         # /model-training
+│       │   ├── model-evaluation/SKILL.md       # /model-evaluation
 │       │   ├── inferencing/SKILL.md            # /inferencing
+│       │   ├── monitoring/SKILL.md             # /monitoring
+│       │   ├── experimentation/SKILL.md        # /experimentation
+│       │   ├── stakeholder-communication/SKILL.md # /stakeholder-communication
 │       │   └── batch-analysis/SKILL.md         # /batch-analysis
 │       └── personas/
 │           ├── persona-analytics-engineer/SKILL.md
@@ -270,7 +279,11 @@ unified-ai-data-framework/
 │   ├── 03_HYPOTHESIS_TESTING.md
 │   ├── 04_FEATURE_ENGINEERING.md
 │   ├── 05_MODEL_TRAINING.md
-│   └── 07_INFERENCING.md
+│   ├── 06_MODEL_EVALUATION.md
+│   ├── 07_INFERENCING.md
+│   ├── 08_MONITORING.md
+│   ├── 09_EXPERIMENTATION.md
+│   └── 10_STAKEHOLDER_COMMUNICATION.md
 │
 ├── personas/                          # Canonical persona content (skills reference these)
 │   ├── _template.md
@@ -516,9 +529,29 @@ Compare at least 3 model families.
 
 ---
 
-### Phase 5: Inference & Drift Monitoring
+### Phase 5: Model Evaluation
 
-**What it does:** Scores new data using the champion model, validates schema, and checks for data drift.
+**What it does:** Deep evaluation of the champion model — calibration analysis, fairness assessment, error analysis, SHAP stability, robustness checks — culminating in a formal Go/No-Go promotion decision.
+
+**Prompt:**
+```
+/model-evaluation
+
+Evaluate the champion model from model_training.ipynb.
+Check calibration, fairness across gender and age groups,
+and identify worst-performing segments.
+```
+
+**What Claude produces:**
+- `model_evaluation.ipynb` — complete evaluation with all analyses
+- `utils/eval_helpers.py` — evaluation and fairness helper functions
+- Promotion decision (PROMOTE / CONDITIONAL / REJECT) logged to MLflow
+
+---
+
+### Phase 6: Inferencing
+
+**What it does:** Scores new data using the promoted champion model, validates schema, and applies the feature engineering pipeline.
 
 **Prompt:**
 ```
@@ -536,7 +569,49 @@ Include drift monitoring against the training distribution.
 
 ---
 
-### Phase 6: Review (Optional but Recommended)
+### Phase 7: Monitoring Setup
+
+**What it does:** Configures operational monitoring — feature drift detection, prediction drift, performance decay tracking, retraining triggers, alerting, and a rollback runbook.
+
+**Prompt:**
+```
+/monitoring
+
+Set up monitoring for the deployed churn model.
+Track drift on all features using KS, PSI, and JS divergence.
+Configure alerts for performance decay below AUC 0.80.
+```
+
+**What Claude produces:**
+- `monitoring_setup.ipynb` — monitoring configuration notebook
+- `utils/monitoring_helpers.py` — drift computation and alerting helpers
+- `monitoring_runbook.md` — standalone operational runbook for on-call response
+
+---
+
+### Phase 8: Stakeholder Communication
+
+**What it does:** Transforms technical results into audience-tailored business communication — executive summaries, detailed reports, slide decks, and one-pagers.
+
+**Prompt:**
+```
+/stakeholder-communication
+
+Create deliverables for the churn prediction project.
+Audiences: VP Marketing (executive), Analytics Lead (domain expert),
+and the ML team (technical peers).
+```
+
+**What Claude produces:**
+- `stakeholder_communication.ipynb` — chart generation and translation scripts
+- `executive_summary.md` — answer-first summary with impact quantification
+- `detailed_technical_report.md` — full methodology and results
+- `slide_deck_outline.md` — 10-15 slide structure
+- `one_pager.md` — problem, approach, finding, impact, recommendation
+
+---
+
+### Phase 9: Review (Optional but Recommended)
 
 **What it does:** Activates the Data Scientist Reviewer persona — a methodological gatekeeper who audits your entire pipeline.
 
@@ -544,14 +619,36 @@ Include drift monitoring against the training distribution.
 ```
 /persona-data-scientist-reviewer
 
-Review the full pipeline: eda.ipynb, feature_engineering.ipynb,
-model_training.ipynb, and inferencing.ipynb.
+Review the full pipeline: eda.ipynb, hypothesis_testing.ipynb,
+feature_engineering.ipynb, model_training.ipynb, model_evaluation.ipynb,
+inferencing.ipynb, monitoring_setup.ipynb, and all stakeholder deliverables.
 Check for data leakage, statistical validity, and reproducibility.
 ```
 
 **What Claude produces:**
-- A structured review report with APPROVED / REVISE / REJECTED verdict
+- A structured review report with APPROVED / REVISE / REJECTED verdict per notebook/deliverable
 - Specific findings with line references and recommendations
+
+---
+
+### Standalone: Experiment Design (Use Anytime)
+
+**What it does:** Designs rigorous A/B tests and experiments — power analysis, MDE sensitivity, randomization, SRM detection, sequential testing, CUPED variance reduction. **Not part of the linear pipeline** — invoke whenever you need causal validation.
+
+**Prompt:**
+```
+/experimentation
+
+Design an A/B test for our new onboarding flow.
+Primary metric: 7-day retention rate (baseline: 35%).
+We need to detect a 3 percentage point lift.
+Daily eligible traffic: 5,000 users.
+```
+
+**What Claude produces:**
+- `experiment_design.ipynb` — power analysis, MDE curves, and design specification
+- `utils/experiment_helpers.py` — power computation and SRM detection helpers
+- Experiment design document ready for stakeholder sign-off
 
 ---
 
@@ -568,8 +665,12 @@ Check for data leakage, statistical validity, and reproducibility.
 | Hypothesis Testing | `/hypothesis-testing` | Statistical tests with assumption checks, effect sizes, power analysis |
 | Feature Engineering | `/feature-engineering` | Build model-ready features from raw data |
 | Model Training | `/model-training` | Train, compare, and select champion model |
+| Model Evaluation | `/model-evaluation` | Deep evaluation — calibration, fairness, error analysis, Go/No-Go gate |
 | Inferencing | `/inferencing` | Score new data and monitor for drift |
-| Batch Analysis | `/batch-analysis` | Run the full pipeline end-to-end (see below) |
+| Monitoring | `/monitoring` | Set up drift detection, performance decay, retraining triggers |
+| Experimentation | `/experimentation` | Design A/B tests — power analysis, MDE, randomization (standalone) |
+| Stakeholder Communication | `/stakeholder-communication` | Translate results into business-ready deliverables |
+| Batch Analysis | `/batch-analysis` | Run the full 9-phase pipeline end-to-end (see below) |
 
 ### Persona Skills
 
@@ -675,7 +776,9 @@ Or let Claude discover the right skill automatically — the CLAUDE.md instructi
 
 ## Batch Analysis: Run Everything at Once
 
-The `/batch-analysis` skill runs the complete data science pipeline in a single command. It executes all phases sequentially (EDA -> Hypothesis Testing -> Feature Engineering -> Model Training -> Inferencing), with each phase building on the outputs of the previous one.
+The `/batch-analysis` skill runs the complete data science pipeline in a single command. It executes all 9 phases sequentially (EDA -> Hypothesis Testing -> Feature Engineering -> Model Training -> Model Evaluation -> Inferencing -> Monitoring -> Stakeholder Communication -> Review), with each phase building on the outputs of the previous one.
+
+> **Note:** The Experimentation playbook (`/experimentation`) is standalone — it is not part of the batch pipeline. Invoke it separately when experiment design is needed.
 
 ### Usage
 
@@ -694,8 +797,11 @@ business_goal: Predict which customers will churn in the next 30 days
 2. **Hypothesis Testing** — Statistical tests validate EDA findings with effect sizes and power analysis
 3. **Feature Engineering** — Transforms are applied based on EDA and hypothesis findings, splits are created
 4. **Model Training** — Multiple models are trained, compared, and a champion is selected
-5. **Inferencing** — The champion model scores the data and drift monitoring is set up
-6. **Review** — A final quality gate checks the entire pipeline
+5. **Model Evaluation** — Deep evaluation with Go/No-Go promotion gate (blocks pipeline if REJECT)
+6. **Inferencing** — The promoted champion model scores data with schema validation
+7. **Monitoring** — Drift detection, performance decay tracking, retraining triggers, and rollback runbook
+8. **Stakeholder Communication** — Executive summary, detailed report, slide deck, and one-pager
+9. **Review** — A final quality gate checks the entire pipeline
 
 ### Parameters
 
@@ -810,9 +916,11 @@ This project is in active development. Key planned additions:
 | High | Analytics engineer persona | **Done** |
 | High | Skills library — 33 analytical toolkits | **Done** |
 | High | Claude Code skill wiring (`.claude/skills/`) | **Done** |
-| Medium | Model evaluation playbook (`06_MODEL_EVALUATION.md`) | Planned |
-| Medium | Monitoring playbook (`08_MONITORING.md`) | Planned |
-| Medium | Experimentation / A-B testing playbook (`09_EXPERIMENTATION.md`) | Planned |
+| High | Model evaluation playbook (`06_MODEL_EVALUATION.md`) | **Done** |
+| High | Monitoring playbook (`08_MONITORING.md`) | **Done** |
+| High | Experimentation playbook (`09_EXPERIMENTATION.md`) | **Done** |
+| High | Stakeholder communication playbook (`10_STAKEHOLDER_COMMUNICATION.md`) | **Done** |
+| High | Full 9-phase batch pipeline | **Done** |
 | Medium | Premises, checklists, and templates | Planned |
 | Low | Domain accelerators (churn, forecasting, fraud, recommenders) | Planned |
 

@@ -38,6 +38,7 @@ The Hub can be added as a git submodule to either Engine or Product when they ne
 | 5 | **Add `analytics_engineer` persona** | Owns the modeled-mart / semantic layer / data-test layer. Without it, every DS playbook assumes clean modeled data exists — that assumption needs an owner. |
 | 6 | **Merge `data-analytics-skills` as `skills/` library** | Gives the AI tactical depth — vetted templates, scripts, and SQL blueprints for specific analytical tasks instead of hallucinating structure from pre-training. |
 | 7 | **Keep `ai-analyst` and `full-funnel-ai-analytics` as separate repos** | Different artifact types (Python app vs. full-stack product vs. pure markdown), different lifecycles, different consumers. Merging would create an unmanageable monolith. |
+| 8 | **Add `10_STAKEHOLDER_COMMUNICATION.md` as a playbook** | Transforms technical results into audience-tailored business communication (executive summary, report, slides, one-pager). Primary deliverables are documents, not the notebook — lightweight notebook for chart generation only. Last phase before the review gate. |
 
 ---
 
@@ -60,7 +61,11 @@ unified-ai-data-framework/
 │       │   ├── hypothesis-testing/SKILL.md
 │       │   ├── feature-engineering/SKILL.md
 │       │   ├── model-training/SKILL.md
+│       │   ├── model-evaluation/SKILL.md
 │       │   ├── inferencing/SKILL.md
+│       │   ├── monitoring/SKILL.md
+│       │   ├── experimentation/SKILL.md
+│       │   ├── stakeholder-communication/SKILL.md
 │       │   └── batch-analysis/SKILL.md
 │       └── personas/
 │           ├── persona-data-scientist-reviewer/SKILL.md
@@ -81,7 +86,11 @@ unified-ai-data-framework/
 │   ├── 03_HYPOTHESIS_TESTING.md
 │   ├── 04_FEATURE_ENGINEERING.md
 │   ├── 05_MODEL_TRAINING.md
-│   └── 07_INFERENCING.md
+│   ├── 06_MODEL_EVALUATION.md
+│   ├── 07_INFERENCING.md
+│   ├── 08_MONITORING.md
+│   ├── 09_EXPERIMENTATION.md
+│   └── 10_STAKEHOLDER_COMMUNICATION.md
 │
 ├── personas/                              # canonical content
 │   ├── _template.md
@@ -125,14 +134,10 @@ unified-ai-data-framework/
 
 | # | Task | Status |
 |---|---|---|
-| 1 | **Write `06_MODEL_EVALUATION.md`** — calibration, fairness, error analysis, baseline comparison | TODO |
-| 2 | **Write `08_MONITORING.md`** — drift, decay, retraining triggers, rollback | TODO |
-| 3 | **Write `09_EXPERIMENTATION.md`** — A/B design, power, MDE, CUPED | TODO |
-| 4 | **Wire skills for 06, 08, 09** — add `.claude/skills/playbooks/` entries once playbooks exist | TODO |
-| 5 | **Build `premises/`** — extract assumption checklists from playbooks (parametric, regression, classification, time series, causal) | TODO |
-| 6 | **Build `checklists/`** — leakage, train-test contamination, multiple testing, effect sizes, reproducibility, stakeholder handoff | TODO |
-| 7 | **Expand `templates/`** — experiment_design, hypothesis_register, metric_definition, model_card, data_card, postmortem | TODO |
-| 8 | **Author `domain_accelerators/`** — start with ad_click_prediction.md, then churn, forecasting, fraud, recommenders | TODO |
+| 1 | **Build `premises/`** — extract assumption checklists from playbooks (parametric, regression, classification, time series, causal) | TODO |
+| 2 | **Build `checklists/`** — leakage, train-test contamination, multiple testing, effect sizes, reproducibility, stakeholder handoff | TODO |
+| 3 | **Expand `templates/`** — experiment_design, hypothesis_register, metric_definition, model_card, data_card, postmortem | TODO |
+| 4 | **Author `domain_accelerators/`** — start with ad_click_prediction.md, then churn, forecasting, fraud, recommenders | TODO |
 
 ### Done
 
@@ -140,11 +145,16 @@ unified-ai-data-framework/
 |---|---|---|
 | 1 | Merge `data-analytics-skills` into `skills/` directory | DONE |
 | 2 | Create unified README.md and CLAUDE.md | DONE |
-| 3 | Write playbooks 00–05, 07 (8 of 11) | DONE |
+| 3 | Write playbooks 00–05, 07 (8 of 12) | DONE |
 | 4 | Author all 10 personas (including analytics_engineer) | DONE |
 | 5 | Wire `.claude/skills/` for all existing playbooks and personas (18 SKILL.md files) | DONE |
 | 6 | Resolve duplicate skills (metric-reconciliation, schema-mapper renamed in domain 02) | DONE |
 | 7 | Remove `.docs/` planning artifacts | DONE |
+| 8 | Write `06_MODEL_EVALUATION.md` — calibration, fairness, error analysis, SHAP stability, Go/No-Go gate | DONE |
+| 9 | Write `08_MONITORING.md` — drift detection, performance decay, retraining triggers, rollback | DONE |
+| 10 | Write `09_EXPERIMENTATION.md` — A/B design, power analysis, MDE, CUPED, switchback | DONE |
+| 11 | Write `10_STAKEHOLDER_COMMUNICATION.md` — audience mapping, SCR narrative, impact quantification | DONE |
+| 12 | Wire skills for 06, 08, 09, 10 + update batch pipeline to 9 phases (26 SKILL.md files total) | DONE |
 
 ---
 
