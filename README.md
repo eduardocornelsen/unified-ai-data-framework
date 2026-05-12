@@ -79,6 +79,20 @@ The Hub can be added as a **git submodule** to any project. It tells Claude *how
 
 ## See It in Action
 
+<div align="center">
+
+**Preview: Databricks Serverless — Live Run Output**
+
+<a href="https://github.com/eduardocornelsen/unified-ai-data-framework">
+  <img src="https://raw.githubusercontent.com/eduardocornelsen/unified-ai-data-framework/refs/heads/main/assets/example_output.png" width="100%" alt="Live run output from the framework's EDA playbook on Databricks Serverless — bivariate analysis, multivariate scatter matrix, and temporal click-rate patterns.">
+</a>
+
+<sub>Live run output from the framework's EDA playbook on Databricks Serverless — bivariate analysis, multivariate scatter matrix, and temporal click-rate patterns. Status: Succeeded in 2m 29s. One of 10+ notebooks in the reference implementation pipeline.</sub>
+
+</div>
+
+<br>
+
 > Demo GIF coming soon — see the [reference implementation](#reference-implementation) for a full walkthrough.
 
 *One command. Full pipeline. Structured outputs. Reproducible artifacts.*
